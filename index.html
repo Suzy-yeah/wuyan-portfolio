@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>吴妍 · AI新媒体运营 | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --cream: #F6F3EC;
+      --forest: #2B3624;
+      --forest-mid: #5B6856;
+      --sage: #8B9285;
+      --warm-tan: #EBE6DA;
+      --gold-green: #C9D68A;
+      --dark-bg: #1D2718;
+      --near-black: #050505;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: #111827;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Text selection */
+    ::selection { background: var(--forest); color: var(--cream); }
+
+    .font-serif-cn { font-family: 'Noto Serif SC', Georgia, serif; }
+    .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+    /* Reveal animation */
+    .aura-view-reveal {
+      opacity: 0;
+      transform: translate3d(var(--aura-x, 0), var(--aura-y, 24px), 0);
+      filter: blur(8px);
+      transition: opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 780ms cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 780ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--aura-delay, 0ms);
+      will-change: opacity, transform, filter;
+    }
+    .aura-view-reveal.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .aura-view-reveal {
+        opacity: 1 !important; transform: none !important;
+        filter: none !important; transition: none !important;
+      }
+    }
+
+    /* Hero word reveal */
+    .reveal-word { transform: translateY(120%); }
+
+    /* ── 导航栏滑动药丸动效（Apple 磨砂胶囊风格） ── */
+    .nav-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px;
+      background: rgba(246, 243, 236, 0.65);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-radius: 9999px;
+      border: 1px solid rgba(43, 54, 36, 0.08);
+      box-shadow: 0 1px 3px rgba(43, 54, 36, 0.04), 0 4px 12px rgba(43, 54, 36, 0.03);
+      overflow: visible;
+    }
+    .nav-pill {
+      position: absolute;
+      height: calc(100% - 10px);
+      top: 5px;
+      background-color: #2B3624;
+      border-radius: 9999px;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                  left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      pointer-events: none;
+    }
+    .nav-link {
+      position: relative;
+      z-index: 1;
+      color: #3D4A36;
+      padding: 7px 14px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      -webkit-font-smoothing: antialiased;
+      transition: color 0.25s ease;
+    }
+    .nav-link.active,
+    .nav-link:hover {
+      color: #F6F3EC !important;
+    }
+
+    /* ── Uiverse Shimmer Button (suda-code) ── */
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      z-index: 1;
+    }
+    .shimmer-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 40%,
+        rgba(255, 255, 255, 0.28) 50%,
+        rgba(255, 255, 255, 0.12) 60%,
+        transparent 100%
+      );
+      transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: -1;
+    }
+    .shimmer-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 54, 36, 0.35);
+    }
+    .shimmer-btn:hover::before {
+      left: 100%;
+    }
+    .shimmer-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* Hover underline links (保留其他用途) */
+
+    /* Project card hover */
+    .project-card {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(43, 54, 36, 0.12);
+    }
+
+    /* Tag chips */
+    .tag-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #4B5563;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .duration-400 { transition-duration: 400ms; }
+    .duration-350 { transition-duration: 350ms; }
+    /* Lightbox */
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 350ms ease; }
+    .lightbox-overlay.is-open { opacity: 1; pointer-events: auto; }
+    .lightbox-img { max-width: 90vw; max-height: 88vh; object-fit: contain; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); transform: scale(0.92); transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1); }
+    .lightbox-overlay.is-open .lightbox-img { transform: scale(1); }
+    .lightbox-close { position: absolute; top: 24px; right: 28px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 200ms ease; }
+    .lightbox-close:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .lightbox-caption { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
+    .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.6); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 200ms ease; }
+    .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.15); color: #fff; }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+
+    /* Section divider dots */
+    .corner-dot {
+      width: 6px; height: 6px;
+      border: 1px solid rgba(43,54,36,0.2);
+      background: var(--cream);
+    }
+
+    /* ══════════════ Phone Frame for Viral Video Cases ══════════════ */
+    .phone-frame {
+      position: relative;
+      width: 180px;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, #f5f5f7 0%, #e8e8ed 50%, #d1d1d6 100%);
+      border-radius: 32px;
+      padding: 2.5px 2.25px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.9),
+        0 0 0 2px rgba(200,200,205,0.3),
+        0 12px 30px rgba(0,0,0,0.25),
+        inset 0 1px 1px rgba(255,255,255,0.8);
+    }
+    .phone-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 19.5;
+      background: #111;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+    /* Dynamic Island */
+    .phone-island {
+      position: absolute;
+      top: 7px; left: 50%;
+      transform: translateX(-50%);
+      width: 68px; height: 19px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 15;
+    }
+    /* Home indicator */
+    .phone-home-bar {
+      position: absolute;
+      bottom: 6px; left: 50%;
+      transform: translateX(-50%);
+      width: 72px; height: 3.5px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 99px;
+      z-index: 15;
+    }
+    .phone-screen-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Video case row layout */
+    .viral-case-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem 1.2rem;
+      align-items: start;
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      transition: all 350ms ease;
+    }
+    .viral-case-row > div:last-child h3 { font-size: 1.15rem !important; margin-bottom: 0.6rem !important; }
+    .viral-case-row > div:last-child { max-width: 420px; }
+    /* Force uniform width for all cases, centered */
+    .viral-case-row {
+      width: 100%;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .viral-case-row > div:last-child .mb-5 { margin-bottom: 0.8rem !important; }
+    .viral-case-row > div:last-child .mb-4 { margin-bottom: 0.7rem !important; }
+    .viral-case-row > div:last-child .mb-3 { margin-bottom: 0.5rem !important; }
+    .viral-case-row > div:last-child .mb-2, .viral-case-row > div:last-child .mb-2\.5 { margin-bottom: 0.4rem !important; }
+    .viral-case-row > div:last-child ul { font-size: 12px !important; line-height: 1.5 !important; margin-top: 0.15rem; }
+    .viral-case-row > div:last-child ul.space-y-1\.5 { row-gap: 0.4rem !important; column-gap: 0; }
+    .viral-case-row > div:last-child li strong { font-size: 12px !important; }
+    .viral-case-row > div:last-child li strong br { display: none; }
+    .viral-case-row > div:last-child .text-lg { font-size: 1.05rem !important; }
+    .viral-case-row > div:last-child .text-xs { font-size: 11px !important; }
+    .viral-case-row > div:last-child .text-sm { font-size: 13px !important; }
+    .viral-case-row > div:last-child .pt-3 { padding-top: 0.6rem !important; }
+    .viral-case-row > div:last-child .gap-x-10 { gap-x: 2rem !important; }
+    @media (max-width: 767px) {
+      .viral-case-row { grid-template-columns: 1fr; gap: 1rem; justify-items: center; text-align: center; max-width: 100%; }
+      .phone-frame { width: 170px; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: rgba(43,54,36,0.2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(43,54,36,0.4); }
+
+    /* Form inputs */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 12px 16px;
+      font-size: 14px;
+      border-radius: 9999px;
+      color: #F6F3EC;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input::placeholder { color: rgba(255,255,255,0.45); }
+    .form-input:focus { border-color: rgba(201,214,138,0.7); }
+    textarea.form-input { border-radius: 16px; resize: none; }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none;
+    }
+    #mobile-menu.open {
+      display: flex;
+    }
+
+    /* Skill bar animation */
+    .skill-bar-fill {
+      width: 0%;
+      transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .skill-bar-fill.animated { width: var(--target-width); }
+
+    /* ══════════════ 3D Card Stack Effect ══════════════ */
+    #cards-stage {
+      perspective: 1600px;
+    }
+    .card-wrapper {
+      background-clip: padding-box;
+      outline: 1px solid transparent;
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 40px rgba(43, 54, 36, 0.08);
+      cursor: grab;
+      touch-action: none;
+    }
+    .card-wrapper:active { cursor: grabbing; }
+    .card-wrapper .card-edge-glow {
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+      );
+    }
+    #portfolio, #videos {
+      background-color: #162018 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    #portfolio { padding-bottom: 4rem !important; }
+    #videos { padding-top: 5rem !important; margin-top: -1px !important; }
+
+    /* ── 文字闪亮效果 · 你好我是吴妍 ── */
+    #hero-headline {
+      position: relative;
+      display: inline-block;
+      color: #2B3624 !important;
+    }
+    #hero-headline::after {
+      content: "你好，\A 我是吴妍";
+      position: absolute;
+      left: 0;
+      top: 0;
+      white-space: pre;
+      color: transparent;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 35%,
+        #C9D68A 50%,
+        transparent 65%,
+        transparent 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hero-shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hero-shimmer {
+      0%   { background-position: 200% center; }
+      70%  { background-position: -50% center; }
+      100% { background-position: -50% center; }
+    }
+  </style>
+</head>
+
+<body class="bg-[#F6F3EC] text-[#111827] antialiased overflow-x-hidden selection:bg-[#2B3624] selection:text-[#F6F3EC]">
+
+  <!-- Border overlay frame -->
+  <div class="fixed inset-0 pointer-events-none z-50 flex justify-center">
+    <div class="w-full max-w-[1400px] h-full border-x border-[#2B3624]/[0.06] relative">
+      <div class="absolute top-0 -left-[3px] corner-dot"></div>
+      <div class="absolute top-[72px] -left-[3px] corner-dot"></div>
+      <div class="absolute top-0 -right-[3px] corner-dot"></div>
+      <div class="absolute top-[72px] -right-[3px] corner-dot"></div>
+      <div class="absolute bottom-0 -left-[3px] corner-dot"></div>
+      <div class="absolute bottom-0 -right-[3px] corner-dot"></div>
+    </div>
+  </div>
+
+  <!-- Main wrapper -->
+  <div class="relative w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-24 flex flex-col min-h-screen">
+
+    <!-- ═══════════════════════════════════════════════
+         NAV / HEADER
+    ═══════════════════════════════════════════════ -->
+    <header class="flex items-center justify-between py-6 border-b border-[#2B3624]/[0.06] relative z-10 sticky top-0 bg-[#F6F3EC]/90 backdrop-blur-sm">
+      <!-- Logo -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 bg-[#2B3624] rounded-sm flex items-center justify-center">
+          <span class="text-[#F6F3EC] font-mono text-xs font-semibold tracking-tight">WY</span>
+        </div>
+        <span class="text-sm font-medium text-[#2B3624] tracking-wide hidden sm:block">吴妍 · Portfolio</span>
+      </div>
+
+      <!-- Desktop nav -->
+      <nav class="nav-container hidden md:flex items-center text-sm font-medium tracking-wide">
+        <span class="nav-pill" id="nav-pill"></span>
+        <a href="#hero" class="nav-link active">首页</a>
+        <a href="#about" class="nav-link">关于我</a>
+        <a href="#portfolio" class="nav-link">账号运营经历</a>
+        <a href="#videos" class="nav-link">视频案例</a>
+        <a href="#contact" class="nav-link">联系方式</a>
+      </nav>
+
+      <!-- CTA -->
+      <div class="flex items-center gap-4">
+        <a href="#contact"
+           class="shimmer-btn bg-[#2B3624] text-[#F6F3EC] text-sm font-medium px-5 py-2.5 rounded-md tracking-wide hidden sm:block relative overflow-hidden">
+          联系我
+        </a>
+        <!-- Mobile hamburger -->
+        <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-1" aria-label="菜单">
+          <span class="w-5 h-0.5 bg-[#2B3624] block transition-all"></span>
+          <span class="w-5 h-0.5 bg-[#2B3624] block transition-all"></span>
+          <span class="w-5 h-0.5 bg-[#2B3624] block transition-all"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 bg-[#F6F3EC] z-40 flex-col items-center justify-center gap-8 text-2xl font-light text-[#2B3624]">
+      <button id="close-menu" class="absolute top-6 right-6 text-[#2B3624]">
+        <iconify-icon icon="lucide:x" width="24"></iconify-icon>
+      </button>
+      <a href="#hero" class="mobile-link hover:text-[#5B6856] transition-colors">首页</a>
+      <a href="#about" class="mobile-link hover:text-[#5B6856] transition-colors">关于我</a>
+      <a href="#portfolio" class="mobile-link hover:text-[#5B6856] transition-colors">账号运营经历</a>
+      <a href="#videos" class="mobile-link hover:text-[#5B6856] transition-colors">视频案例</a>
+      <a href="#contact" class="mobile-link hover:text-[#5B6856] transition-colors">联系方式</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 1 · HERO
+    ═══════════════════════════════════════════════ -->
+    <section id="hero"
+      class="flex-1 flex flex-col lg:flex-row items-center pt-16 lg:pt-24 pb-20 gap-16 lg:gap-28 relative z-10">
+
+      <!-- Left: Text -->
+      <div class="w-full lg:w-[45%] flex flex-col items-start pt-4 lg:pt-0">
+        <span class="text-xs text-[#6A7165] font-mono tracking-widest mb-6 uppercase flex items-center gap-2">
+          <span class="w-6 h-px bg-[#6A7165] inline-block"></span>
+          个人作品集 · 2026
+        </span>
+
+        <h1 id="hero-headline"
+          class="font-serif-cn text-5xl sm:text-6xl lg:text-7xl xl:text-[80px] leading-[1.25] text-[#2B3624] mb-6 font-light tracking-tight">
+          你好，<br/>我是吴妍
+        </h1>
+
+        <p class="text-base sm:text-lg text-[#4B5563] leading-relaxed max-w-lg mb-4 font-normal">
+          AI产品运营方向 · AI内容运营
+        </p>
+        <p class="text-sm sm:text-base text-[#6A7165] leading-relaxed max-w-lg mb-10">
+          我是一个喜欢研究AI与内容运营结合的新媒体运营者。实习期间负责AI账号全流程运营，从选题策划、脚本创作，到AI图片/视频内容生产、发布运营和数据优化，具备AIGC内容生产与账号增长实践经验。持续关注AI应用与内容趋势，希望通过AI提升内容效率，并探索AI在用户增长和产品运营中的更多可能。
+        </p>
+
+        <div class="flex items-center gap-4">
+          <a href="#portfolio"
+             class="shimmer-btn bg-[#2B3624] text-[#F6F3EC] text-sm font-medium px-6 py-3 rounded-md shadow-md flex items-center gap-2 relative overflow-hidden">
+            查看作品集
+            <iconify-icon icon="lucide:arrow-down" width="14"></iconify-icon>
+          </a>
+          <a href="#contact"
+             class="shimmer-btn text-sm font-medium text-[#2B3624] border border-[#2B3624]/20 px-6 py-3 rounded-md relative overflow-hidden">
+            联系我
+          </a>
+        </div>
+
+        <!-- Skill tags -->
+        <div class="flex flex-wrap gap-2 mt-10">
+          <span class="tag-chip">AI内容运营</span>
+          <span class="tag-chip">账号增长</span>
+          <span class="tag-chip">短视频策划</span>
+          <span class="tag-chip">用户洞察</span>
+        </div>
+      </div>
+
+      <!-- Right: 3D Card Stack -->
+      <div class="w-full lg:w-[55%] flex flex-col items-center lg:pl-8 -translate-x-[3%]">
+        <div class="w-full max-w-[680px] relative" style="height: 560px; margin-top: -15px; margin-bottom: -25px;">
+          <!-- Interactive dot field background -->
+          <canvas id="dot-canvas"
+            class="absolute inset-0 rounded-[20px] hidden"
+            style="background: #F0EDD8;"></canvas>
+
+          <div id="cards-stage"
+            class="relative w-full h-full flex justify-center items-center scale-[0.95]">
+
+    <!-- ══ Card 1 · Far Left – AI Workflow ══ -->
+    <div class="card-wrapper absolute w-[194px] h-[266px] sm:w-[245px] sm:h-[338px] md:w-[288px] md:h-[396px] rounded-2xl overflow-hidden bg-[#2d1f18]" data-index="0">
+        <div class="card-edge-glow rounded-[inherit]"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(201,214,138,0.5) 1px, transparent 1px); background-size: 16px 16px;"></div>
+        </div>
+        <div class="relative w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none px-4 sm:px-5 text-center">
+            <!-- Main title -->
+            <h3 class="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#C9D68A] mb-2 sm:mb-3">AI Workflow</h3>
+            <!-- Workflow steps -->
+            <div class="space-y-0.5 sm:space-y-1 text-xs sm:text-sm md:text-base text-white/90 leading-relaxed">
+                <p>用户洞察</p>
+                <p class="text-[8px] sm:text-[10px] text-[#C9D68A]/70">↓</p>
+                <p>AI辅助策划</p>
+                <p class="text-[8px] sm:text-[10px] text-[#C9D68A]/70">↓</p>
+                <p>内容生成</p>
+                <p class="text-[8px] sm:text-[10px] text-[#C9D68A]/70">↓</p>
+                <p>发布运营</p>
+                <p class="text-[8px] sm:text-[10px] text-[#C9D68A]/70">↓</p>
+                <p>数据复盘</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Card 2 · Mid Left – 爆款案例 ══ -->
+    <div class="card-wrapper absolute w-[194px] h-[266px] sm:w-[245px] sm:h-[338px] md:w-[288px] md:h-[396px] rounded-2xl overflow-hidden bg-white" data-index="1">
+        <div class="card-edge-glow rounded-[inherit]"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-[#F6F3EC] to-[#EBE6DA]"></div>
+        <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-[40px] bg-[#C9D68A]/15"></div>
+        <div class="absolute bottom-0 left-0 w-16 h-16 rounded-tr-[30px] bg-[#2B3624]/5"></div>
+        <div class="relative w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none px-3 sm:px-4 text-center">
+            <!-- Main title -->
+            <h3 class="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#2B3624] mb-2 sm:mb-3">爆款案例</h3>
+            <!-- Core results -->
+            <div class="space-y-1 sm:space-y-1.5 text-sm sm:text-base md:text-lg text-[#5B6856] leading-relaxed">
+                <p><span class="font-bold text-[#2B3624]">4</span>条小红书<span class="font-bold text-[#2B3624]">1w+</span>浏览量笔记</p>
+                <p><span class="font-bold text-[#2B3624]">5</span>条抖音<span class="font-bold text-[#2B3624]">10w+</span>浏览量视频</p>
+                <p>多条抖音<span class="font-bold text-[#2B3624]">1w+</span>浏览量视频</p>
+            </div>
+            <!-- Tags -->
+            <div class="mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-[#2B3624]/10 w-[80%]">
+                <p class="text-[10px] sm:text-[12px] text-[#5B6856]/90 tracking-wide">选题策划 / 脚本撰写 / 内容制作 / 发布运营</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Card 4 · Mid Right – AI Tools ══ -->
+    <div class="card-wrapper absolute w-[194px] h-[266px] sm:w-[245px] sm:h-[338px] md:w-[288px] md:h-[396px] rounded-2xl overflow-hidden bg-[#3a4d32]" data-index="3">
+        <div class="card-edge-glow rounded-[inherit]"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(rgba(201,214,138,0.5) 1px, transparent 1px); background-size: 14px 14px;"></div>
+        </div>
+        <div class="relative w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none px-3 sm:px-4 text-center">
+            <!-- Main title -->
+            <h3 class="text-xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#C9D68A] mb-2 sm:mb-3">AI Tools</h3>
+            <!-- Tool list -->
+            <div class="text-[11px] sm:text-sm md:text-base text-white/90 leading-relaxed">
+                <p>ChatGPT · Gemini · 即梦</p>
+                <p>Lovart · 海螺 · Codex · WorkBuddy</p>
+                <p class="text-[10px] sm:text-[11px] text-white/50 mt-1.5 sm:mt-2">等</p>
+            </div>
+            <!-- Bottom tag -->
+            <div class="mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-white/15 w-[80%]">
+                <p class="text-[10px] sm:text-[12px] text-[#C9D68A]/80 tracking-wide">内容策划 / 视觉生成 / 视频制作 / 效率提升</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Card 5 · Far Right – 商业合作 ══ -->
+    <div class="card-wrapper absolute w-[194px] h-[266px] sm:w-[245px] sm:h-[338px] md:w-[288px] md:h-[396px] rounded-2xl overflow-hidden bg-[#4d2715]" data-index="4">
+        <div class="card-edge-glow rounded-[inherit]"></div>
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(rgba(201,214,138,0.5) 1px, transparent 1px); background-size: 14px 14px;"></div>
+        </div>
+        <div class="relative w-full h-full flex flex-col items-center justify-center z-10 pointer-events-none px-3 sm:px-4 text-center">
+            <!-- Main title -->
+            <h3 class="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#C9D68A] mb-2 sm:mb-3">商业合作</h3>
+            <!-- Brand list -->
+            <div class="text-[13px] sm:text-base md:text-lg text-white/90 leading-relaxed space-y-0.5 sm:space-y-1">
+                <p>账号运营期间</p>
+                <p class="text-[11px] sm:text-[12px] text-white/50">获得AI品牌合作：</p>
+                <p>即梦 · 小云雀</p>
+                <p>Liblib · Lovart</p>
+                <p>星流AI · Libtv</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Card 3 · Center Front – 主卡片 (吴妍Profile) ══ -->
+    <div class="card-wrapper absolute w-[216px] h-[288px] sm:w-[274px] sm:h-[374px] md:w-[318px] md:h-[432px] rounded-[26px] overflow-hidden z-50 outline outline-1 outline-white/25 -outline-offset-1 bg-[#2c1d11]" data-index="2">
+        <div class="card-edge-glow rounded-[inherit]"></div>
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <!-- Subtle animated texture overlay -->
+            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#fff 1.5px, transparent 1.5px); background-size: 6px 6px; mask-image: linear-gradient(to bottom, black 45%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 45%, transparent 100%);"></div>
+            <!-- Gradient overlays for depth -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#C9D68A]/30 via-[#5B6856]/50 to-[#1D2718]/95 mix-blend-hard-light"></div>
+            <div class="absolute inset-0 bg-white/8 backdrop-blur-[10px]"></div>
+        </div>
+
+        <!-- Traffic lights -->
+        <div class="absolute top-3 left-3 flex gap-1.5 z-20">
+            <div class="w-[10px] sm:w-[12px] h-[10px] sm:h-[12px] bg-[#FF5F57] rounded-full shadow-sm"></div>
+            <div class="w-[10px] sm:w-[12px] h-[10px] sm:h-[12px] bg-[#FEBC2E] rounded-full shadow-sm"></div>
+            <div class="w-[10px] sm:w-[12px] h-[10px] sm:h-[12px] bg-[#28C840] rounded-full shadow-sm"></div>
+        </div>
+
+        <div class="relative w-full h-full p-4 sm:p-5 lg:p-6 flex flex-col justify-between z-10 pb-5 sm:pb-6 pointer-events-none">
+            <!-- Avatar & name row -->
+            <div class="flex items-center gap-2.5 sm:gap-3 mt-6 sm:mt-8">
+                <img src="avatar.jpg" alt="吴妍" class="w-[77px] h-[77px] sm:w-[86px] sm:h-[86px] md:w-[106px] md:h-[106px] rounded-full object-cover flex-shrink-0 ring-2 ring-white/20" style="object-position: center 28%;" />
+                <div class="text-[26px] sm:text-[31px] md:text-[36px] font-bold text-white drop-shadow-sm leading-tight tracking-wide">吴妍</div>
+            </div>
+
+            <!-- Info list -->
+            <div class="mt-2.5 space-y-1 text-[12px] sm:text-[13px] md:text-[14px] text-white/60 font-light leading-relaxed">
+                <p>年龄：22</p>
+                <p>电话/微信：19579852923</p>
+                <p>学校：广州城市职业学院</p>
+                <p>专业：网络新闻与传播</p>
+                <p>意向岗位：AI产品运营/AI内容运营</p>
+            </div>
+
+            <!-- Stats bar -->
+            <div class="grid grid-cols-3 gap-1 pt-3.5 border-t border-white/10">
+                <div class="text-center"><div class="text-xs sm:text-sm font-bold text-white/90 font-mono">2</div><div class="text-[8px] text-white/30">个账号独立运营</div></div>
+                <div class="text-center border-x border-white/10"><div class="text-xs sm:text-sm font-bold text-white/90 font-mono">10w+</div><div class="text-[8px] text-white/30">浏览量多条</div></div>
+                <div class="text-center"><div class="text-xs sm:text-sm font-bold text-white/90 font-mono">3700+</div><div class="text-[8px] text-white/30">累计涨粉</div></div>
+            </div>
+        </div>
+    </div>
+</div><!-- /cards-stage -->
+
+        </div>
+        <p class="text-xs text-[#8B9285] font-mono tracking-widest uppercase mt-6 text-center">
+          PROFILE CARD · 2026
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 2 · ABOUT ME
+    ═══════════════════════════════════════════════ -->
+    <section id="about"
+      class="py-20 sm:py-28 border-t border-[#2B3624]/[0.06] relative z-10">
+
+      <div class="max-w-5xl mx-auto">
+        <!-- Section label -->
+        <div class="flex items-center gap-3 mb-14">
+          <span class="text-xs font-mono text-[#8B9285] uppercase tracking-widest">02 · About</span>
+          <div class="h-px flex-1 bg-[#2B3624]/[0.06]"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+          <!-- Left: Bio text -->
+          <div>
+            <h2 class="font-serif-cn text-4xl sm:text-5xl font-light tracking-tight text-[#2B3624] mb-8 leading-[1.2]">
+              关于我
+            </h2>
+          </div>
+
+          <!-- Right: empty (timeline moved below) -->
+          <div></div>
+        </div>
+
+        <!-- Timeline cards: Work Experience + Education (side by side) -->
+        <div class="mt-10 grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+          <!-- Card 1 · 工作经历 -->
+          <div class="bg-[#EBE6DA] rounded-2xl p-7 sm:p-8 border border-[#2B3624]/[0.03]" data-animate>
+            <h3 class="text-sm font-semibold text-[#2B3624] uppercase tracking-wider mb-6">工作经历</h3>
+            <div class="relative pl-5 border-l border-[#2B3624]/10 space-y-6">
+              <div class="relative">
+                <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#2B3624] border-2 border-[#F6F3EC]"></div>
+                <div class="text-[10px] font-mono text-[#8B9285] uppercase tracking-widest mb-1">2026.3 — 2026.6</div>
+                <div class="text-sm font-semibold text-[#2B3624]">AI新媒体运营</div>
+                <div class="text-xs text-[#6A7165]">广东唐百诗传媒有限公司 · 广州</div>
+              </div>
+              <div class="relative">
+                <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#EBE6DA] border-2 border-[#2B3624]/30"></div>
+                <div class="text-[10px] font-mono text-[#8B9285] uppercase tracking-widest mb-1">2024.6 — 2024.9</div>
+                <div class="text-sm font-semibold text-[#2B3624]">档案数字化项目实习生</div>
+                <div class="text-xs text-[#6A7165]">江西工业职业技术学院</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 · 教育经历 -->
+          <div class="bg-[#EBE6DA] rounded-2xl p-7 sm:p-8 border border-[#2B3624]/[0.03]" data-animate>
+            <h3 class="text-sm font-semibold text-[#2B3624] uppercase tracking-wider mb-6">教育/获奖经历</h3>
+            <div class="relative pl-5 border-l border-[#2B3624]/10 space-y-6">
+              <div class="relative">
+                <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#EBE6DA] border-2 border-[#2B3624]/30"></div>
+                <div class="text-[10px] font-mono text-[#8B9285] uppercase tracking-widest mb-1">2023.9 — 2026.6</div>
+                <div class="text-sm font-semibold text-[#2B3624]">网络新闻与传播</div>
+                <div class="text-xs text-[#6A7165]">广州城市职业学院 · 艺术与新媒体学院</div>
+              </div>
+              <div class="relative">
+                <div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-[#C9D68A]/50 border-2 border-[#2B3624]/30"></div>
+                <div class="text-[10px] font-mono text-[#8B9285] uppercase tracking-widest mb-1">2025.12</div>
+                <div class="text-sm font-semibold text-[#2B3624]">广州市青少年禁毒主题文艺作品创作大赛</div>
+                <div class="text-xs text-[#6A7165]">优秀奖</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 2 · SKILLS & TOOLS
+    ═══════════════════════════════════════════════ -->
+    <section id="skills"
+      class="py-20 sm:py-28 bg-[#F6F3EC] -mx-6 sm:-mx-12 lg:-mx-24 px-6 sm:px-12 lg:px-24">
+
+      <div class="max-w-3xl mx-auto">
+        <!-- Skill bars card -->
+        <div class="bg-[#EBE6DA] rounded-2xl p-8 mb-8 border border-[#2B3624]/[0.03]" data-animate>
+          <h3 class="text-sm font-semibold text-[#2B3624] uppercase tracking-wider mb-6">技能掌握</h3>
+          <div class="space-y-5" id="skill-bars">
+            <div class="skill-item">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="font-medium text-[#2B3624]">AIGC内容生产（即梦/可灵/海螺等）</span>
+                <span class="font-mono text-[#6A7165]">95%</span>
+              </div>
+              <div class="h-2.5 bg-[#2B3624]/10 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full bg-[#2B3624] rounded-full" style="--target-width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="font-medium text-[#2B3624]">平台运营（小红书/抖音/视频号）</span>
+                <span class="font-mono text-[#6A7165]">92%</span>
+              </div>
+              <div class="h-2.5 bg-[#2B3624]/10 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full bg-[#2B3624] rounded-full" style="--target-width: 92%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="font-medium text-[#2B3624]">大模型辅助创作（ChatGPT/Gemini/DeepSeek）</span>
+                <span class="font-mono text-[#6A7165]">90%</span>
+              </div>
+              <div class="h-2.5 bg-[#2B3624]/10 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full bg-[#2B3624] rounded-full" style="--target-width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="font-medium text-[#2B3624]">智能体提高效率（Codex / WorkBuddy）</span>
+                <span class="font-mono text-[#6A7165]">80%</span>
+              </div>
+              <div class="h-2.5 bg-[#2B3624]/10 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full bg-[#2B3624] rounded-full" style="--target-width: 80%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="font-medium text-[#2B3624]">海外趋势洞察（TikTok / Instagram）</span>
+                <span class="font-mono text-[#6A7165]">75%</span>
+              </div>
+              <div class="h-2.5 bg-[#2B3624]/10 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full bg-[#2B3624] rounded-full" style="--target-width: 75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools & tags card -->
+        <div class="bg-[#EBE6DA] rounded-2xl p-8 border border-[#2B3624]/[0.03]" data-animate>
+          <h3 class="text-sm font-semibold text-[#2B3624] uppercase tracking-wider mb-5">常用工具 & 技能标签</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag-chip">ChatGPT</span>
+            <span class="tag-chip">Gemini</span>
+            <span class="tag-chip">DeepSeek</span>
+            <span class="tag-chip">Codex</span>
+            <span class="tag-chip">即梦</span>
+            <span class="tag-chip">可灵</span>
+            <span class="tag-chip">Workbuddy</span>
+            <span class="tag-chip">海螺</span>
+            <span class="tag-chip">Lovart</span>
+            <span class="tag-chip">liblib</span>
+            <span class="tag-chip bg-[#EBE6DA]! border-[#2B3624]/10! text-[#6A7165]!">📱 小红书运营</span>
+            <span class="tag-chip bg-[#EBE6DA]! border-[#2B3624]/10! text-[#6A7165]!">📹 抖音运营</span>
+            <span class="tag-chip bg-[#EBE6DA]! border-[#2B3624]/10! text-[#6A7165]!">🌐 TikTok/Instagram</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════
+         SECTION 3 · PORTFOLIO
+    ═══════════════════════════════════════════════ -->
+    <section id="portfolio"
+      class="pt-20 sm:pt-28 pb-0 -mx-6 sm:-mx-12 lg:-mx-24 px-6 sm:px-12 lg:px-24 text-[#F6F3EC]"
+      style="background-color: #162018;">
+
+      <div class="max-w-5xl mx-auto">
+        <!-- Section label -->
+        <div class="flex items-center gap-3 mb-14">
+          <span class="text-xs font-mono text-[#8B9285] uppercase tracking-widest">03 · Portfolio</span>
+          <div class="h-px flex-1 bg-white/10"></div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+          <h2 class="font-serif-cn text-4xl sm:text-5xl font-light tracking-tight text-[#F6F3EC] leading-[1.2]">
+            账号运营经历
+          </h2>
+          <p class="text-[#D8D0B8] text-sm max-w-xs leading-relaxed">
+            涵盖 AI 账号孵化、内容商业化等实战项目，每一个都经得起数据验证。
+          </p>
+        </div>
+
+        <!-- Project grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Project 1 - Featured (spans 2 cols on lg) -->
+          <div class="project-card lg:col-span-2 bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group cursor-pointer">
+            <!-- Preview area -->
+            <div class="h-52 bg-gradient-to-br from-[#2B3624] to-[#5B6856] relative overflow-hidden">
+              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(201,214,138,0.35) 1px, transparent 1px); background-size: 18px 18px;"></div>
+              <!-- 3张账号截图 · 缩略图 -->
+              <div id="accountGallery" class="absolute inset-3 flex gap-3">
+                <div class="gallery-item flex-1 min-w-0 relative rounded-xl overflow-hidden cursor-pointer ring-1 ring-white/[0.08] transition-all duration-400 hover:ring-white/[0.2] hover:scale-[1.02]" data-index="0" data-caption="AI未来日记 · 抖音">
+                  <img loading="lazy" decoding="async" src="assets/douyin-ai.jpg" alt="AI未来日记 · 抖音" class="w-full h-full object-cover"/>
+                  <div class="absolute inset-0 bg-black/[0.22] pointer-events-none"></div>
+                  <div class="absolute bottom-0 left-0 right-0 px-3 py-2.5 backdrop-blur-md bg-black/50 border-t border-white/10">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[9px] font-semibold text-white/90">AI未来日记</span>
+                      <span class="text-[7px] text-white/40 font-mono ml-auto">抖音</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-item flex-1 min-w-0 relative rounded-xl overflow-hidden cursor-pointer ring-1 ring-white/[0.08] transition-all duration-400 hover:ring-white/[0.2] hover:scale-[1.02]" data-index="1" data-caption="斯斯的AI日记 · 小红书">
+                  <img loading="lazy" decoding="async" src="assets/xiaohongshu-sisi.jpg" alt="斯斯的AI日记 · 小红书" class="w-full h-full object-cover"/>
+                  <div class="absolute inset-0 bg-black/[0.22] pointer-events-none"></div>
+                  <div class="absolute bottom-0 left-0 right-0 px-3 py-2.5 backdrop-blur-md bg-black/50 border-t border-white/10">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[9px] font-semibold text-white/90">斯斯的AI日记</span>
+                      <span class="text-[7px] text-white/40 font-mono ml-auto">小红书</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-item flex-1 min-w-0 relative rounded-xl overflow-hidden cursor-pointer ring-1 ring-white/[0.08] transition-all duration-400 hover:ring-white/[0.2] hover:scale-[1.02]" data-index="2" data-caption="每日AI小课堂 · 小红书">
+                  <img loading="lazy" decoding="async" src="assets/xiaohongshu-class.jpg" alt="每日AI小课堂 · 小红书" class="w-full h-full object-cover"/>
+                  <div class="absolute inset-0 bg-black/[0.22] pointer-events-none"></div>
+                  <div class="absolute bottom-0 left-0 right-0 px-3 py-2.5 backdrop-blur-md bg-black/50 border-t border-white/10">
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[9px] font-semibold text-white/90">每日AI小课堂</span>
+                      <span class="text-[7px] text-white/40 font-mono ml-auto">小红书</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card content -->
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <h3 class="font-medium text-[#F6F3EC] text-lg mb-1">双账号运营案例</h3>
+                  <p class="text-[#D8D0B8] text-sm leading-relaxed">
+                    独立完成选题规划、AI内容生产到多平台分发的全链路运营。覆盖小红书、抖音、视频号三大平台，账号矩阵累计涨粉3700+，产出多篇10万+播放内容。
+                  </p>
+                </div>
+                <iconify-icon icon="lucide:arrow-up-right" width="18" class="text-[#8B9285] group-hover:text-[#C9D68A] transition-colors mt-1 flex-shrink-0"></iconify-icon>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mt-4">
+                <span class="text-[10px] px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[#D8D0B8]">小红书</span>
+                <span class="text-[10px] px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[#D8D0B8]">抖音</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group cursor-pointer">
+            <div class="h-44 bg-gradient-to-br from-[#4A3728] to-[#2B2418] relative overflow-hidden">
+              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(rgba(246,243,236,0.55) 1px, transparent 1px); background-size: 18px 18px;"></div>
+              <div class="absolute inset-3 flex flex-col items-center justify-center">
+                <div class="grid grid-cols-3 gap-2 w-[90%] mx-auto">
+                  <!-- 即梦 -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-jimeng.jpg" alt="即梦" class="w-full h-full object-contain"/>
+                  </div>
+                  <!-- 小云雀 -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-xiaoyun.jpg" alt="小云雀" class="w-full h-full object-contain"/>
+                  </div>
+                  <!-- liblib -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-liblib.jpg" alt="LibLib" class="w-full h-full object-contain"/>
+                  </div>
+                  <!-- Lovart -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-lovart.jpg" alt="Lovart" class="w-full h-full object-contain"/>
+                  </div>
+                  <!-- 星流AI -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-xingliu.jpg" alt="星流AI" class="w-full h-full object-contain"/>
+                  </div>
+                  <!-- Libtv -->
+                  <div class="flex items-center justify-center bg-white/[0.05] rounded-lg border border-white/[0.06] aspect-square p-2">
+                    <img loading="lazy" decoding="async" src="assets/logo-libtv.jpg" alt="LibTV" class="w-full h-full object-contain"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex items-start justify-between mb-2">
+                <h3 class="font-medium text-[#F6F3EC] text-base">AI工具商业化合作项目</h3>
+                <iconify-icon icon="lucide:arrow-up-right" width="16" class="text-[#8B9285] group-hover:text-[#C9D68A] transition-colors flex-shrink-0"></iconify-icon>
+              </div>
+              <p class="text-[#D8D0B8] text-xs leading-relaxed mb-4">
+                对接即梦、小云雀、liblib、Lovart、星流AI、Libtv等多个AIGC平台官方合作，推动账号商业化变现，实现商品转化8000+。
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[10px] px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[#D8D0B8]">即梦</span>
+                <span class="text-[10px] px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[#D8D0B8]">liblib</span>
+                <span class="text-[10px] px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[#D8D0B8]">Lovart</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section><section id="videos"
+      class="pt-0 pb-14 sm:pb-20 -mx-6 sm:-mx-12 lg:-mx-24 px-6 sm:px-12 lg:px-24 text-[#F6F3EC]"
+      style="background-color: #162018;">
+
+      <div class="max-w-5xl mx-auto">
+        <!-- Section label -->
+        <div class="flex items-center gap-3 mb-8">
+          <span class="text-xs font-mono text-[#8B9285] uppercase tracking-widest">04 · Viral Videos</span>
+          <div class="h-px flex-1 bg-white/10"></div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <h2 class="font-serif-cn text-4xl sm:text-5xl font-light tracking-tight text-[#F6F3EC] leading-[1.2]">
+            视频案例
+          </h2>
+        </div>
+
+        <div class="grid gap-6" style="grid-template-columns: minmax(0, 1fr);">
+
+          <!-- Case 1: 抖音-AI 实景转 VR 游戏特效教程 -->
+          <div class="viral-case-row bg-white/[#C9D68A]/[0.04] border border-white/8 hover:bg-white/[0.06] hover:border-white/12">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img loading="lazy" decoding="async" src="assets/viral-video-case1.jpg" alt="" class="phone-screen-img" />
+                <div class="phone-home-bar"></div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center items-center min-w-0 px-6 pt-14 pb-5">
+              <h3 class="font-serif-cn text-2xl sm:text-3xl font-medium text-[#F6F3EC] mb-4 tracking-tight text-center">抖音-AI 实景转 VR 游戏特效教程</h3>
+              <!-- 核心数据 -->
+              <div class="mb-5 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:bar-chart-3" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">核心数据：</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-2">
+                  <div><span class="text-[#B8B09A] text-xs">播放量</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">10w+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">点赞</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">3800+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">收藏</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">4800+</span></div>
+                </div>
+              </div>
+              <!-- 运营策略 -->
+              <div class="mb-4 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:lightbulb" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">运营策略：选题差异化 + 标题标签精准引流 + 垂直受众</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-[#B8B09A] leading-relaxed list-none">
+                  <li><strong class="text-[#F6F3EC]">选题差异化</strong> 聚焦"AI+游戏"细分方向，避开泛娱乐红海，以差异化内容切入市场空白</li>
+                  <li><strong class="text-[#F6F3EC]">标题标签精准引流</strong> 标题融入高搜索量关键词（AI、VR、游戏），配合精准话题标签组合提升曝光</li>
+                  <li><strong class="text-[#F6F3EC]">垂直受众定位</strong> 面向年轻游戏玩家群体，通过专业术语和实操演示建立信任感与粘性</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case 2: 小红书-AI+电商实战技巧 -->
+          <div class="viral-case-row bg-white/[#C9D68A]/[0.04] border border-white/8 hover:bg-white/[0.06] hover:border-white/12">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img loading="lazy" decoding="async" src="assets/viral-video-case2.jpg" alt="" class="phone-screen-img" />
+                <div class="phone-home-bar"></div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center items-center min-w-0 px-6 pt-14 pb-5">
+              <h3 class="font-serif-cn text-2xl sm:text-3xl font-medium text-[#F6F3EC] mb-4 tracking-tight text-center">小红书-AI+电商实战技巧</h3>
+              <!-- 核心数据 -->
+              <div class="mb-5 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:bar-chart-3" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">核心数据：</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-2">
+                  <div><span class="text-[#B8B09A] text-xs">播放量</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">1w+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">点赞</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">500+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">收藏</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">1500+</span></div>
+                </div>
+              </div>
+              <!-- 运营策略 -->
+              <div class="mb-4 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:lightbulb" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">运营策略：流量选题打造 + 长效内容矩阵 + 互动增长设计</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-[#B8B09A] leading-relaxed list-none">
+                  <li><strong class="text-[#F6F3EC]">流量选题打造</strong> 锚定 AI + 电商双热门赛道，干货价值前置，直击商家效率痛点</li>
+                  <li><strong class="text-white">长效内容矩阵</strong> 标准化产出教程内容，构建长期内容资产</li>
+                  <li><strong class="text-[#F6F3EC]">互动增长设计</strong> 配套提示词福利刺激用户收藏转发，提升笔记平台推荐权重</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case 3: 抖音-AI实景转插画海报教程 -->
+          <div class="viral-case-row bg-white/[#C9D68A]/[0.04] border border-white/8 hover:bg-white/[0.06] hover:border-white/12">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img loading="lazy" decoding="async" src="assets/viral-video-case3.jpg" alt="" class="phone-screen-img" />
+                <div class="phone-home-bar"></div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center items-center min-w-0 px-6 pt-14 pb-5">
+              <h3 class="font-serif-cn text-2xl sm:text-3xl font-medium text-[#F6F3EC] mb-4 tracking-tight text-center">抖音-AI实景转插画海报教程</h3>
+              <!-- 核心数据 -->
+              <div class="mb-5 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:bar-chart-3" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">核心数据：</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-2">
+                  <div><span class="text-[#B8B09A] text-xs">播放量</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">10w+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">点赞</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">3100+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">收藏</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">4000+</span></div>
+                </div>
+              </div>
+              <!-- 运营策略 -->
+              <div class="mb-4 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:lightbulb" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">运营策略：简易实操教学 + 效果对比视觉 + 多赛道标签矩阵</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-[#B8B09A] leading-relaxed list-none">
+                  <li><strong class="text-[#F6F3EC]">分步教学</strong> 摒弃专业 PS 复杂操作，拆解 AI 实景转插画简易操作步骤，降低入门门槛</li>
+                  <li><strong class="text-[#F6F3EC]">视觉呈现</strong> 实景原图与 AI 插画成品对比展示，直观突出一键转换的特效优势</li>
+                  <li><strong class="text-[#F6F3EC]">标签矩阵</strong> 叠加多类垂直标签，覆盖剪辑、设计两类流量池</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case 4: 抖音-AI运镜 · 实现商业推广 -->
+          <div class="viral-case-row bg-white/[#C9D68A]/[0.04] border border-white/8 hover:bg-white/[0.06] hover:border-white/12">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <div class="phone-island"></div>
+                <img loading="lazy" decoding="async" src="assets/viral-video-case4.jpg" alt="" class="phone-screen-img" />
+                <div class="phone-home-bar"></div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center items-center min-w-0 px-6 pt-14 pb-5">
+              <h3 class="font-serif-cn text-2xl sm:text-3xl font-medium text-[#F6F3EC] mb-4 tracking-tight text-center">抖音-AI运镜 · 实现商业推广</h3>
+              <!-- 核心数据 -->
+              <div class="mb-5 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:bar-chart-3" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">核心数据：</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-10 gap-y-2">
+                  <div><span class="text-[#B8B09A] text-xs">播放量</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">6w+</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">点赞</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">680</span></div>
+                  <div><span class="text-[#B8B09A] text-xs">收藏</span><br/><span class="text-lg font-semibold text-[#C9D68A] font-mono">300+</span></div>
+                </div>
+              </div>
+              <!-- 运营策略 -->
+              <div class="mb-4 text-center">
+                <div class="flex items-center justify-center gap-2 mb-2.5">
+                  <iconify-icon icon="lucide:lightbulb" width="14" class="text-[#C9D68A]/70"></iconify-icon>
+                  <span class="text-sm font-medium text-[#D8D0B8]">运营策略：特色功能演示 + 赛事流量借势 + 品牌标签矩阵</span>
+                </div>
+                <ul class="space-y-1.5 text-xs text-[#B8B09A] leading-relaxed list-none">
+                  <li><strong class="text-[#F6F3EC]">特色功能演示</strong> 实操演示核心线条控镜功能，直观展示产品镜头轨迹操控优势，输出产品卖点</li>
+                  <li><strong class="text-[#F6F3EC]">赛事流量借势</strong> 绑定世界杯热门场馆场景，借大赛热点提升视频曝光，强化工具商用创作适配性</li>
+                  <li><strong class="text-[#F6F3EC]">品牌标签矩阵</strong> 全覆盖产品品牌、AI，强化品牌曝光，引流工具商用创作者，达成商单种草转化</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- ═══════════════════════════════════════════════
+         SECTION 05 · CONTACT & FOOTER
+    ═══════════════════════════════════════════════ -->
+    <section id="contact"
+      class="my-12 py-24 sm:py-32 px-6 sm:px-10 lg:px-14 rounded-2xl border border-[#D8D0B8]/15 overflow-hidden text-[#F6F3EC] relative"
+      style="background: radial-gradient(circle at 88% 18%, rgba(124,141,82,0.9) 0%, rgba(124,141,82,0.42) 28%, transparent 45%), linear-gradient(135deg, #1D2718 0%, #35452A 55%, #12180F 100%);">
+
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+        <!-- Left: contact info -->
+        <div class="flex flex-col justify-center">
+          <div class="text-xs font-mono text-[#C9D68A]/70 uppercase tracking-widest mb-3">05 · Contact</div>
+          <h2 class="font-serif-cn text-4xl sm:text-5xl font-light tracking-tight leading-[1.3] mb-6">
+            期待与您共同探索<br/>AI 增长的更多可能
+          </h2>
+          <p class="text-[15px] sm:text-base text-[#B8B09A] leading-relaxed mb-8 max-w-md">
+            目前正在积极寻找 AI产品运营 / AI内容运营 相关的全职工作机会。如果您正在寻找一位既懂AI技术流整合、又具备爆款增长基因的运营伙伴，欢迎随时与我联系！
+          </p>
+        </div>
+
+        <!-- Right: contact info cards -->
+        <div class="space-y-3.5">
+          <div class="flex items-center gap-4 px-5 py-3.5 rounded-xl backdrop-blur-md bg-white/[0.06] border border-white/10">
+            <iconify-icon icon="lucide:phone" width="18" class="text-[#C9D68A] flex-shrink-0"></iconify-icon>
+            <span class="text-[#F6F3EC] text-[15px]">电话/微信：19579852923</span>
+            <button class="copy-btn ml-auto flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-[#C9D68A] hover:bg-white/15 transition-all cursor-pointer" data-copy="19579852923" title="复制号码">
+              <iconify-icon icon="lucide:copy" width="16"></iconify-icon>
+            </button>
+          </div>
+          <div class="flex items-center gap-4 px-5 py-3.5 rounded-xl backdrop-blur-md bg-white/[0.06] border border-white/10">
+            <iconify-icon icon="lucide:mail" width="18" class="text-[#C9D68A] flex-shrink-0"></iconify-icon>
+            <span class="text-[#F6F3EC] text-[15px]">邮箱：2017623199@qq.com</span>
+            <button class="copy-btn ml-auto flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-[#C9D68A] hover:bg-white/15 transition-all cursor-pointer" data-copy="2017623199@qq.com" title="复制邮箱">
+              <iconify-icon icon="lucide:copy" width="16"></iconify-icon>
+            </button>
+          </div>
+          <div class="flex items-center gap-4 px-5 py-3.5 rounded-xl backdrop-blur-md bg-white/[0.06] border border-white/10">
+            <iconify-icon icon="lucide:map-pin" width="18" class="text-[#C9D68A] flex-shrink-0"></iconify-icon>
+            <span class="text-[#F6F3EC] text-[15px]">地点：深圳</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 sm:py-20 border-t border-white/5 text-center overflow-hidden relative">
+      <!-- Large watermark -->
+      <div class="pointer-events-none select-none absolute inset-0 flex items-center justify-center" style="z-index:0;">
+        <span class="font-serif-cn text-[clamp(3rem,8vw,6rem)] font-light tracking-[0.15em] text-white/[0.03] whitespace-nowrap">
+          AI驱动。内容。增长。
+        </span>
+      </div>
+
+      <div class="relative z-10 max-w-5xl mx-auto px-6 sm:px-12">
+        <div class="flex flex-wrap justify-center gap-6 mb-8 text-xs text-[#6A7165] uppercase tracking-widest">
+          <span>AIGC</span>
+          <span>小红书</span>
+          <span>抖音</span>
+          <span>运营</span>
+        </div>
+        <p class="text-xs text-[#6A7165]">
+          © 2026 吴妍 · AI新媒体运营 · 保留所有权利
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Non-blocking: load GSAP + Iconify after HTML renders -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ═══════════════════════════════════════
+     0. NAV PILL SLIDER (滑动药丸导航)
+  ═══════════════════════════════════════ */
+  const pill = document.getElementById('nav-pill');
+  const navLinks = document.querySelectorAll('.nav-link');
+  if (pill && navLinks.length > 0) {
+    function movePill(link) {
+      const rect = link.getBoundingClientRect();
+      const parentRect = link.parentElement.getBoundingClientRect();
+      pill.style.width = rect.width + 'px';
+      pill.style.left = (rect.left - parentRect.left) + 'px';
+    }
+    // 初始定位到 active 项
+    const activeLink = document.querySelector('.nav-link.active') || navLinks[0];
+    movePill(activeLink);
+    // hover 时移动药丸
+    navLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => movePill(link));
+      link.addEventListener('mouseleave', () => {
+        const currentActive = document.querySelector('.nav-link.active') || navLinks[0];
+        movePill(currentActive);
+      });
+    });
+    // 窗口 resize 时重新定位
+    window.addEventListener('resize', () => {
+      const currentActive = document.querySelector('.nav-link.active') || navLinks[0];
+      movePill(currentActive);
+    });
+    // 点击切换 active —— 强制重设颜色 + 显式滚动
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        navLinks.forEach(l => {
+          l.classList.remove('active');
+          l.style.color = '#3D4A36';
+        });
+        this.classList.add('active');
+        this.style.color = '#F6F3EC';
+        movePill(this);
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════
+     1. CARD FAN ANIMATION (5 cards)
+  ═══════════════════════════════════════ */
+  const cards = document.querySelectorAll('.card-wrapper');
+  if (cards.length > 0) {
+      const cardTargets = [
+          { x: -145, y: 35, rotateZ: -14, scale: 0.779, zIndex: 10 },
+          { x: -68, y: 12, rotateZ: -7, scale: 0.836, zIndex: 20 },
+          { x: 0, y: -5, rotateZ: 0, scale: 0.95, zIndex: 50 },
+          { x: 68, y: 12, rotateZ: 7, scale: 0.836, zIndex: 20 },
+          { x: 145, y: 35, rotateZ: 14, scale: 0.779, zIndex: 10 }
+      ];
+
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+          cardTargets[0] = { x: -165, y: 55, rotateZ: -14, scale: 0.645, zIndex: 10 };
+          cardTargets[1] = { x: -73, y: 20, rotateZ: -7, scale: 0.737, zIndex: 20 };
+          cardTargets[2] = { x: 0, y: 0, rotateZ: 0, scale: 0.8754, zIndex: 50 };
+          cardTargets[3] = { x: 73, y: 20, rotateZ: 7, scale: 0.737, zIndex: 20 };
+          cardTargets[4] = { x: 165, y: 55, rotateZ: 14, scale: 0.645, zIndex: 10 };
+      }
+
+      gsap.set(cards, { 
+          y: 200, opacity: 0, rotateZ: 0, scale: 0.5,
+          transformPerspective: 1000
+      });
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const cardElements = Array.from(cards);
+      const centerCard = cardElements.find(c => c.dataset.index == 2);
+      const midCards = [cardElements.find(c => c.dataset.index == 1), cardElements.find(c => c.dataset.index == 3)];
+      const outerCards = [cardElements.find(c => c.dataset.index == 0), cardElements.find(c => c.dataset.index == 4)];
+
+      tl.to(centerCard, { 
+          duration: 1.2, opacity: 1, y: cardTargets[2].y, x: cardTargets[2].x,
+          rotateZ: cardTargets[2].rotateZ, scale: cardTargets[2].scale, zIndex: cardTargets[2].zIndex, ease: "expo.out"
+      }, 0.5)
+      .to(midCards, { 
+          duration: 1.4, opacity: 1, y: (i, el) => cardTargets[el.dataset.index].y, x: (i, el) => cardTargets[el.dataset.index].x,
+          rotateZ: (i, el) => cardTargets[el.dataset.index].rotateZ, scale: (i, el) => cardTargets[el.dataset.index].scale,
+          zIndex: (i, el) => cardTargets[el.dataset.index].zIndex, ease: "back.out(1.2)"
+      }, 0.7)
+      .to(outerCards, { 
+          duration: 1.6, opacity: 1, y: (i, el) => cardTargets[el.dataset.index].y, x: (i, el) => cardTargets[el.dataset.index].x,
+          rotateZ: (i, el) => cardTargets[el.dataset.index].rotateZ, scale: (i, el) => cardTargets[el.dataset.index].scale,
+          zIndex: (i, el) => cardTargets[el.dataset.index].zIndex, ease: "back.out(1.1)"
+      }, 0.9);
+
+      const startFloat = (card) => {
+          gsap.to(card, { 
+              y: `+=${Math.random() * 8 + 4}`,
+              duration: 2 + Math.random(),
+              yoyo: true, repeat: -1,
+              ease: "sine.inOut", delay: Math.random()
+          });
+      };
+      tl.add(() => { cards.forEach(card => startFloat(card)); }, "-=0.5");
+
+      let activeCard = null;
+      let startMouseX = 0, startMouseY = 0, startCardX = 0, startCardY = 0;
+
+      cards.forEach(card => {
+          card.style.touchAction = "none";
+          card.style.cursor = "grab";
+
+          card.addEventListener('pointerdown', (e) => {
+              activeCard = card;
+              const idx = card.dataset.index;
+              gsap.killTweensOf(card);
+              startMouseX = e.clientX; startMouseY = e.clientY;
+              startCardX = gsap.getProperty(card, "x");
+              startCardY = gsap.getProperty(card, "y");
+              card.style.cursor = "grabbing";
+              gsap.to(card, { 
+                  scale: cardTargets[idx].scale + 0.05, rotateZ: cardTargets[idx].rotateZ * 0.2,
+                  zIndex: 200, duration: 0.3, ease: "power2.out",
+                  boxShadow: "0 40px 80px -15px rgba(0,0,0,0.8), 0 0 60px rgba(201,214,138,0.35)"
+              });
+              card.setPointerCapture(e.pointerId);
+          });
+
+          card.addEventListener('pointermove', (e) => {
+              if (activeCard !== card) return;
+              gsap.set(card, { x: startCardX + (e.clientX - startMouseX), y: startCardY + (e.clientY - startMouseY) });
+          });
+
+          card.addEventListener('pointerup', (e) => {
+              if (activeCard !== card) return;
+              card.releasePointerCapture(e.pointerId);
+              activeCard = null;
+              card.style.cursor = "grab";
+              const idx = card.dataset.index;
+              gsap.to(card, { 
+                  x: cardTargets[idx].x, y: cardTargets[idx].y,
+                  scale: cardTargets[idx].scale, rotateZ: cardTargets[idx].rotateZ,
+                  zIndex: cardTargets[idx].zIndex, duration: 0.8,
+                  ease: "elastic.out(1, 0.6)",
+                  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.45)",
+                  onComplete: () => startFloat(card)
+              });
+          });
+
+          card.addEventListener('mouseenter', () => {
+              if (activeCard === card) return;
+              const idx = card.dataset.index;
+              gsap.to(card, { 
+                  scale: cardTargets[idx].scale + 0.04, rotateZ: cardTargets[idx].rotateZ * 0.5,
+                  zIndex: 100, duration: 0.35, ease: "power2.out",
+                  boxShadow: "0 32px 64px -12px rgba(0,0,0,0.65), 0 0 50px rgba(201,214,138,0.25)"
+              });
+          });
+
+          card.addEventListener('mouseleave', () => {
+              if (activeCard === card) return;
+              const idx = card.dataset.index;
+              gsap.to(card, { 
+                  scale: cardTargets[idx].scale, rotateZ: cardTargets[idx].rotateZ,
+                  zIndex: cardTargets[idx].zIndex, duration: 0.5, ease: "power2.out",
+                  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.45)"
+              });
+          });
+      });
+  }
+
+  /* ═══════════════════════════════════════
+     2. MOBILE MENU TOGGLE
+  ═══════════════════════════════════════ */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeMenuBtn = document.getElementById('close-menu');
+  if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+      if (closeMenuBtn) closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+      mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+  }
+
+  /* ═══════════════════════════════════════
+     3. DOT CANVAS BACKGROUND
+  ═══════════════════════════════════════ */
+  const dotCanvas = document.getElementById('dot-canvas');
+  if (dotCanvas) {
+      const ctx = dotCanvas.getContext('2d');
+      let dots = [];
+      let mouse = { x: -9999, y: -9999 };
+      let rafId = null;
+
+      function resizeDotCanvas() {
+          const rect = dotCanvas.getBoundingClientRect();
+          dotCanvas.width = rect.width * window.devicePixelRatio;
+          dotCanvas.height = rect.height * window.devicePixelRatio;
+          ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+          initDots(rect.width, rect.height);
+      }
+
+      function initDots(w, h) {
+          dots = [];
+          const spacing = 28;
+          const cols = Math.ceil(w / spacing);
+          const rows = Math.ceil(h / spacing);
+          const offsetX = (w - (cols - 1) * spacing) / 2;
+          const offsetY = (h - (rows - 1) * spacing) / 2;
+          for (let i = 0; i < cols; i++) {
+              for (let j = 0; j < rows; j++) {
+                  dots.push({
+                      baseX: offsetX + i * spacing,
+                      baseY: offsetY + j * spacing,
+                      x: offsetX + i * spacing,
+                      y: offsetY + j * spacing,
+                      r: 1.8
+                  });
+              }
+          }
+      }
+
+      function drawDots() {
+          const w = dotCanvas.width / window.devicePixelRatio;
+          const h = dotCanvas.height / window.devicePixelRatio;
+          ctx.clearRect(0, 0, w, h);
+          dots.forEach(dot => {
+              const dx = mouse.x - dot.x;
+              const dy = mouse.y - dot.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              const maxDist = 120;
+              if (dist < maxDist) {
+                  const force = (1 - dist / maxDist) * 18;
+                  dot.x = dot.baseX - (dx / dist) * force;
+                  dot.y = dot.baseY - (dy / dist) * force;
+              } else {
+                  dot.x += (dot.baseX - dot.x) * 0.08;
+                  dot.y += (dot.baseY - dot.y) * 0.08;
+              }
+              ctx.beginPath();
+              ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(107,122,95,0.35)';
+              ctx.fill();
+          });
+          rafId = requestAnimationFrame(drawDots);
+      }
+
+      dotCanvas.addEventListener('mousemove', e => {
+          const rect = dotCanvas.getBoundingClientRect();
+          mouse.x = e.clientX - rect.left;
+          mouse.y = e.clientY - rect.top;
+      });
+      dotCanvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+      resizeDotCanvas();
+      drawDots();
+      window.addEventListener('resize', resizeDotCanvas);
+  }
+
+  /* ═══════════════════════════════════════
+     4. LIGHTBOX GALLERY
+  ═══════════════════════════════════════ */
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  if (galleryItems.length > 0) {
+      let overlay = null;
+      let currentIndex = 0;
+
+      function createOverlay() {
+          overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          overlay.innerHTML = '<img class="lightbox-img" src="" alt="" /><button class="lightbox-close">&times;</button><button class="lightbox-prev">&#10094;</button><button class="lightbox-next">&#10095;</button><span class="lightbox-caption"></span>';
+          document.body.appendChild(overlay);
+          overlay.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+          overlay.querySelector('.lightbox-prev').addEventListener('click', () => showImage(currentIndex - 1));
+          overlay.querySelector('.lightbox-next').addEventListener('click', () => showImage(currentIndex + 1));
+          overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+      }
+
+      function showImage(idx) {
+          const items = Array.from(document.querySelectorAll('.gallery-item'));
+          if (idx < 0) idx = items.length - 1;
+          if (idx >= items.length) idx = 0;
+          currentIndex = idx;
+          const img = items[idx].querySelector('img');
+          const caption = items[idx].getAttribute('data-caption') || '';
+          if (!overlay) createOverlay();
+          overlay.querySelector('.lightbox-img').src = img.src;
+          overlay.querySelector('.lightbox-caption').textContent = caption;
+          overlay.classList.add('is-open');
+      }
+
+      function closeLightbox() {
+          if (overlay) overlay.classList.remove('is-open');
+      }
+
+      galleryItems.forEach((item, idx) => item.addEventListener('click', (e) => { e.stopPropagation(); showImage(idx); }));
+
+      document.addEventListener('keydown', e => {
+          if (!overlay || !overlay.classList.contains('is-open')) return;
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+          if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+      });
+  }
+
+  /* ═══════════════════════════════════════
+     5. HERO HEADLINE REVEAL (CSS only)
+  ═══════════════════════════════════════ */
+  const headline = document.getElementById('hero-headline');
+  if (headline) {
+    headline.style.opacity = '0';
+    headline.style.transform = 'translateY(20px)';
+    headline.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        headline.style.opacity = '1';
+        headline.style.transform = 'translateY(0)';
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════
+     6. AURA VIEW REVEAL (scroll animations)
+  ═══════════════════════════════════════ */
+  const auraSelectors = [
+      'section h2','section h3',
+      'section p','section .grid > div',
+      '.viral-case-row'
+  ];
+  const auraTargets = [...new Set(auraSelectors.flatMap(s => Array.from(document.querySelectorAll(s))))]
+      .filter(el => !el.closest('.fixed') && !el.closest('script, style'));
+
+  const auraGroups = new Map();
+  auraTargets.forEach(el => {
+      const group = el.closest('header, main, section, footer') || document.body;
+      if (!auraGroups.has(group)) auraGroups.set(group, []);
+      auraGroups.get(group).push(el);
+  });
+
+  auraGroups.forEach(items => {
+      items.forEach((el, idx) => {
+          el.classList.add('aura-view-reveal');
+          el.style.setProperty('--aura-delay', `${Math.min(idx * 50, 400)}ms`);
+      });
+  });
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) { auraTargets.forEach(el => el.classList.add('is-visible')); }
+  else if ('IntersectionObserver' in window) {
+      const auraObs = new IntersectionObserver(entries => {
+          entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); auraObs.unobserve(entry.target); }});
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      auraTargets.forEach(el => auraObs.observe(el));
+  } else { auraTargets.forEach(el => el.classList.add('is-visible')); }
+
+  // Skill bars animation
+  const skillSection = document.getElementById('skill-bars');
+  if (skillSection && 'IntersectionObserver' in window) {
+    const skillObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
+            setTimeout(() => bar.classList.add('animated'), i * 150);
+          });
+          skillObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    skillObs.observe(skillSection);
+  }
+
+  /* ═══════════════════════════════════════
+     复制按钮（电话/邮箱）
+  ═══════════════════════════════════════ */
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const text = this.getAttribute('data-copy');
+      try {
+        await navigator.clipboard.writeText(text);
+        // 图标变为 ✓ 表示成功
+        const icon = this.querySelector('iconify-icon');
+        icon.setAttribute('icon', 'lucide:check');
+        this.style.color = '#C9D68A';
+        setTimeout(() => {
+          icon.setAttribute('icon', 'lucide:copy');
+          this.style.color = '';
+        }, 1500);
+      } catch (e) {
+        // fallback for non-secure contexts
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        const icon = this.querySelector('iconify-icon');
+        icon.setAttribute('icon', 'lucide:check');
+        this.style.color = '#C9D68A';
+        setTimeout(() => {
+          icon.setAttribute('icon', 'lucide:copy');
+          this.style.color = '';
+        }, 1500);
+      }
+    });
+  });
+
+});
+</script>
+</body>
+</html>
